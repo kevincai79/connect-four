@@ -1,0 +1,50 @@
+.fun {
+  background: green;
+  text-align: center;
+}
+
+body {
+  text-align: center;
+}
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 10px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+button {
+  width: 80px;
+  height: 80px;
+  padding: 10px 10px;
+  border-radius: 40px;
+  background-color: #a7aaaf;
+  border: 2px solid black;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+table {
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+#table1 {
+  background-color: #f4def2;
+}
+
+#replay {
+  width: auto;
+  height: auto;
+}
+/* td {
+  height: 80px;
+  width: 80px;
+  border-color: black;
+  background-color: #a7aaaf;
+  border-radius: 40px;
+} */
