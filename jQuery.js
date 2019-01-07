@@ -17,13 +17,13 @@ function addTable(row, col, cellsToPlay = new Set()) {
   return [table, cellsToPlay];
 }
 
-var createTable = addTable(6, 7);
-var table1 = createTable[0];
-var cellsToPlay = createTable[1];
-var rowNum = table1.children.length;
-var colNum = table1.children[0].children.length;
-table1.setAttribute('id', 'table1');
-content.appendChild(table1);
+// var createTable = addTable(6, 7);
+// var table1 = createTable[0];
+// var cellsToPlay = createTable[1];
+// var rowNum = table1.children.length;
+// var colNum = table1.children[0].children.length;
+// table1.setAttribute('id', 'table1');
+// content.appendChild(table1);
 
 function changeColor(rowIndex, colIndex, color) {
   $('#table1 tr')
@@ -43,7 +43,7 @@ function currentCellColor(rowIndex, colIndex) {
     .css('background-color');
 }
 
-function isGameOver(rowIndex, colIndex) {
+function isGameOver(rowIndex, colIndex, colNum) {
   let sameColorCells = 1;
   let color = currentCellColor(rowIndex, colIndex);
 
@@ -78,7 +78,7 @@ function isGameOver(rowIndex, colIndex) {
 // }
 // }
 
-var tds = document.querySelectorAll('td');
+// var tds = document.querySelectorAll('td');
 // for (let td of tds) {
 //   td.addEventListener('click', changeColor);
 // }
@@ -88,16 +88,29 @@ var tds = document.querySelectorAll('td');
 //   console.log(tr.rowIndex);
 // }
 
-var player1, player2, currentPlayer, color, replay;
+// var player1, player2, currentPlayer, color, replay;
 
 button.addEventListener('click', () => {
   $(button).remove();
 
-  player1 = prompt('Please enter play1 name');
-  player2 = prompt('Please enter play2 name');
-  currentPlayer = player1;
-  color = 'red';
+  var rowCount = prompt('Enter the row number you would like for the board');
+  var colCount = prompt('Enter the column number you would like for the board');
+
+  var createTable = addTable(rowCount, colCount);
+  var table1 = createTable[0];
+  var cellsToPlay = createTable[1];
+  var rowNum = table1.children.length;
+  var colNum = table1.children[0].children.length;
+  table1.setAttribute('id', 'table1');
+  content.appendChild(table1);
+  var tds = document.querySelectorAll('td');
+
+  var player1 = prompt('Please enter play1 name');
+  var player2 = prompt('Please enter play2 name');
+  var currentPlayer = player1;
+  var color = 'red';
   var gameOver = false;
+  var replay;
 
   $('h4')
     .eq(0)
@@ -148,14 +161,17 @@ button.addEventListener('click', () => {
       }
 
       console.log(rowIndex, colIndex);
-      console.log(isGameOver(rowIndex, colIndex));
+      console.log(colNum);
+      console.log(isGameOver(rowIndex, colIndex, colNum));
       console.log(cellsToPlay);
       if (
-        (rowIndex + 1 && isGameOver(rowIndex, colIndex)) ||
+        (rowIndex + 1 && isGameOver(rowIndex, colIndex, colNum)) ||
         cellsToPlay.size == 0
       ) {
         gameOver = true;
       }
+
+      console.log(gameOver);
 
       if (!gameOver) {
         $('h4')
@@ -163,7 +179,7 @@ button.addEventListener('click', () => {
           .html(`${currentPlayer}: It is your turn to play.`);
       } else if (!replay) {
         let message;
-        if (cellsToPlay.size == 0 && !isGameOver(rowIndex, colIndex)) {
+        if (cellsToPlay.size == 0 && !isGameOver(rowIndex, colIndex, colNum)) {
           message = 'Game over. Nobody won.';
         } else {
           let winner = currentPlayer == player1 ? player2 : player1;
