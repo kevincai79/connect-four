@@ -105,8 +105,8 @@ button.addEventListener('click', () => {
   content.appendChild(table1);
   var tds = document.querySelectorAll('td');
 
-  var player1 = prompt('Please enter play1 name');
-  var player2 = prompt('Please enter play2 name');
+  var player1 = prompt('Please enter player1 name');
+  var player2 = prompt('Please enter player2 name');
   var currentPlayer = player1;
   var color = 'red';
   var gameOver = false;
