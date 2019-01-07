@@ -161,7 +161,6 @@ button.addEventListener('click', () => {
       }
 
       console.log(rowIndex, colIndex);
-      console.log(colNum);
       console.log(isGameOver(rowIndex, colIndex, colNum));
       console.log(cellsToPlay);
       if (
