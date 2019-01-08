@@ -43,7 +43,7 @@ function currentCellColor(rowIndex, colIndex) {
     .css('background-color');
 }
 
-function isGameOver(rowIndex, colIndex, colNum) {
+function horizontalWin(rowIndex, colIndex, colNum) {
   let sameColorCells = 1;
   let color = currentCellColor(rowIndex, colIndex);
 
@@ -65,6 +65,13 @@ function isGameOver(rowIndex, colIndex, colNum) {
     }
   }
 
+  return false;
+}
+
+function isGameOver(rowIndex, colIndex, colNum) {
+  if (horizontalWin(rowIndex, colIndex, colNum)) {
+    return true;
+  }
   return false;
 }
 // var color = $(this)
