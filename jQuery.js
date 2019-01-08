@@ -217,7 +217,7 @@ button.addEventListener('click', () => {
   var currentPlayer = player1;
   var color = 'red';
   var gameOver = false;
-  var replay;
+  var replay, winner;
 
   $('h4')
     .eq(0)
@@ -267,17 +267,15 @@ button.addEventListener('click', () => {
         currentPlayer = player1;
       }
 
-      console.log(rowIndex, colIndex);
-      console.log(isGameOver(rowIndex, colIndex, colNum, rowNum));
-      console.log(cellsToPlay);
+      // console.log(rowIndex, colIndex);
+      // console.log(isGameOver(rowIndex, colIndex, colNum, rowNum));
+      // console.log(cellsToPlay);
       if (
         (rowIndex + 1 && isGameOver(rowIndex, colIndex, colNum, rowNum)) ||
         cellsToPlay.size == 0
       ) {
         gameOver = true;
       }
-
-      console.log(gameOver);
 
       if (!gameOver) {
         $('h4')
@@ -291,13 +289,23 @@ button.addEventListener('click', () => {
         ) {
           message = 'Game over. Nobody won.';
         } else {
-          let winner = currentPlayer == player1 ? player2 : player1;
+          winner = currentPlayer == player1 ? player2 : player1;
           message = `Game over. ${winner} won!`;
+        }
+
+        let fontColor;
+        if (winner == player1) {
+          fontColor = 'red';
+        } else if (winner == player2) {
+          fontColor = 'green';
+        } else {
+          fontColor = 'orange';
         }
 
         $('h4')
           .next()
           .html(message)
+          .css('color', fontColor)
           .after(
             '<button id="replay" class="btn btn-primary">Play again!</button>'
           );
