@@ -122,7 +122,41 @@ function diagonalRightWin(rowIndex, colIndex, colNum, rowNum, color) {
       break;
     }
   }
-  console.log('diagonal', sameColorCells);
+
+  return false;
+}
+
+function diagonalLefttWin(rowIndex, colIndex, colNum, rowNum, color) {
+  let sameColorCells = 1;
+  let i = (k = rowIndex),
+    j = (l = colIndex);
+  while (i - 1 >= 0 && j - 1 >= 0) {
+    if (currentCellColor(i - 1, j - 1) == color) {
+      sameColorCells++;
+
+      if (sameColorCells >= 4) {
+        return true;
+      }
+      i--;
+      j--;
+    } else {
+      break;
+    }
+  }
+
+  while (k + 1 < rowNum && l + 1 < colNum) {
+    if (currentCellColor(k + 1, l + 1) == color) {
+      sameColorCells++;
+
+      if (sameColorCells >= 4) {
+        return true;
+      }
+      k++;
+      l++;
+    } else {
+      break;
+    }
+  }
 
   return false;
 }
@@ -133,7 +167,8 @@ function isGameOver(rowIndex, colIndex, colNum, rowNum) {
   if (
     horizontalWin(rowIndex, colIndex, colNum, color) ||
     verticalWin(rowIndex, colIndex, rowNum, color) ||
-    diagonalRightWin(rowIndex, colIndex, colNum, rowNum, color)
+    diagonalRightWin(rowIndex, colIndex, colNum, rowNum, color) ||
+    diagonalLefttWin(rowIndex, colIndex, colNum, rowNum, color)
   ) {
     return true;
   }
