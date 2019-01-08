@@ -49,7 +49,7 @@ function horizontalWin(rowIndex, colIndex, colNum, color) {
   for (let i = colIndex - 1; i >= 0; i--) {
     if (currentCellColor(rowIndex, i) == color) {
       sameColorCells++;
-      if (sameColorCells == 4) return true;
+      if (sameColorCells >= 4) return true;
     } else {
       break;
     }
@@ -58,7 +58,7 @@ function horizontalWin(rowIndex, colIndex, colNum, color) {
   for (let j = colIndex + 1; j < colNum; j++) {
     if (currentCellColor(rowIndex, j) == color) {
       sameColorCells++;
-      if (sameColorCells == 4) return true;
+      if (sameColorCells >= 4) return true;
     } else {
       break;
     }
@@ -73,7 +73,7 @@ function verticalWin(rowIndex, colIndex, rowNum, color) {
   for (let i = rowIndex - 1; i >= 0; i--) {
     if (currentCellColor(i, colIndex) == color) {
       sameColorCells++;
-      if (sameColorCells == 4) return true;
+      if (sameColorCells >= 4) return true;
     } else {
       break;
     }
@@ -82,11 +82,47 @@ function verticalWin(rowIndex, colIndex, rowNum, color) {
   for (let j = rowIndex + 1; j < rowNum; j++) {
     if (currentCellColor(j, colIndex) == color) {
       sameColorCells++;
-      if (sameColorCells == 4) return true;
+      if (sameColorCells >= 4) return true;
     } else {
       break;
     }
   }
+
+  return false;
+}
+
+function diagonalRightWin(rowIndex, colIndex, colNum, rowNum, color) {
+  let sameColorCells = 1;
+  let i = (k = rowIndex),
+    j = (l = colIndex);
+  while (i - 1 >= 0 && j + 1 < colNum) {
+    if (currentCellColor(i - 1, j + 1) == color) {
+      sameColorCells++;
+
+      if (sameColorCells >= 4) {
+        return true;
+      }
+      i--;
+      j++;
+    } else {
+      break;
+    }
+  }
+
+  while (k + 1 < rowNum && l - 1 >= 0) {
+    if (currentCellColor(k + 1, l - 1) == color) {
+      sameColorCells++;
+
+      if (sameColorCells >= 4) {
+        return true;
+      }
+      k++;
+      l--;
+    } else {
+      break;
+    }
+  }
+  console.log('diagonal', sameColorCells);
 
   return false;
 }
@@ -96,7 +132,8 @@ function isGameOver(rowIndex, colIndex, colNum, rowNum) {
 
   if (
     horizontalWin(rowIndex, colIndex, colNum, color) ||
-    verticalWin(rowIndex, colIndex, rowNum, color)
+    verticalWin(rowIndex, colIndex, rowNum, color) ||
+    diagonalRightWin(rowIndex, colIndex, colNum, rowNum, color)
   ) {
     return true;
   }
@@ -140,8 +177,8 @@ button.addEventListener('click', () => {
   content.appendChild(table1);
   var tds = document.querySelectorAll('td');
 
-  var player1 = prompt('Please enter player1 name');
-  var player2 = prompt('Please enter player2 name');
+  var player1 = prompt('Please enter player1 name, your color is red');
+  var player2 = prompt('Please enter player2 name, your color is green');
   var currentPlayer = player1;
   var color = 'red';
   var gameOver = false;
