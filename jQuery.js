@@ -43,9 +43,8 @@ function currentCellColor(rowIndex, colIndex) {
     .css('background-color');
 }
 
-function horizontalWin(rowIndex, colIndex, colNum) {
+function horizontalWin(rowIndex, colIndex, colNum, color) {
   let sameColorCells = 1;
-  let color = currentCellColor(rowIndex, colIndex);
 
   for (let i = colIndex - 1; i >= 0; i--) {
     if (currentCellColor(rowIndex, i) == color) {
@@ -68,8 +67,37 @@ function horizontalWin(rowIndex, colIndex, colNum) {
   return false;
 }
 
-function isGameOver(rowIndex, colIndex, colNum) {
-  if (horizontalWin(rowIndex, colIndex, colNum)) {
+function verticalWin(rowIndex, colIndex, rowNum, color) {
+  let sameColorCells = 1;
+
+  for (let i = rowIndex - 1; i >= 0; i--) {
+    if (currentCellColor(i, colIndex) == color) {
+      sameColorCells++;
+      if (sameColorCells == 4) return true;
+    } else {
+      break;
+    }
+  }
+
+  for (let j = rowIndex + 1; j < rowNum; j++) {
+    if (currentCellColor(j, colIndex) == color) {
+      sameColorCells++;
+      if (sameColorCells == 4) return true;
+    } else {
+      break;
+    }
+  }
+
+  return false;
+}
+
+function isGameOver(rowIndex, colIndex, colNum, rowNum) {
+  let color = currentCellColor(rowIndex, colIndex);
+
+  if (
+    horizontalWin(rowIndex, colIndex, colNum, color) ||
+    verticalWin(rowIndex, colIndex, rowNum, color)
+  ) {
     return true;
   }
   return false;
@@ -168,10 +196,10 @@ button.addEventListener('click', () => {
       }
 
       console.log(rowIndex, colIndex);
-      console.log(isGameOver(rowIndex, colIndex, colNum));
+      console.log(isGameOver(rowIndex, colIndex, colNum, rowNum));
       console.log(cellsToPlay);
       if (
-        (rowIndex + 1 && isGameOver(rowIndex, colIndex, colNum)) ||
+        (rowIndex + 1 && isGameOver(rowIndex, colIndex, colNum, rowNum)) ||
         cellsToPlay.size == 0
       ) {
         gameOver = true;
@@ -185,7 +213,10 @@ button.addEventListener('click', () => {
           .html(`${currentPlayer}: It is your turn to play.`);
       } else if (!replay) {
         let message;
-        if (cellsToPlay.size == 0 && !isGameOver(rowIndex, colIndex, colNum)) {
+        if (
+          cellsToPlay.size == 0 &&
+          !isGameOver(rowIndex, colIndex, colNum, rowNum)
+        ) {
           message = 'Game over. Nobody won.';
         } else {
           let winner = currentPlayer == player1 ? player2 : player1;
