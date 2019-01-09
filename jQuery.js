@@ -217,11 +217,19 @@ button.addEventListener('click', () => {
   var currentPlayer = player1;
   var color = 'red';
   var gameOver = false;
-  var replay, winner;
+  var replay, winner, playerColor;
 
   $('h4')
     .eq(0)
-    .after(`<h2>${currentPlayer}: It is your turn to play.</h2>`);
+    .after(
+      `<h2><span style="color:red;">${currentPlayer}</span>: It is your turn to play.`
+    )
+    .append(
+      `<h5><span style="color:red;">${player1}</span>: color is <span style="color:red;">Red</h5>`
+    )
+    .append(
+      `<h5><span style="color:green;">${player2}</span>: color is <span style="color:green;">Green</h5>`
+    );
 
   for (let td of tds) {
     td.addEventListener('click', () => {
@@ -277,10 +285,14 @@ button.addEventListener('click', () => {
         gameOver = true;
       }
 
+      playerColor = currentPlayer == player1 ? 'red' : 'green';
+
       if (!gameOver) {
         $('h4')
           .next()
-          .html(`${currentPlayer}: It is your turn to play.`);
+          .html(
+            `<span style="color: ${playerColor}">${currentPlayer}</span>: It is your turn to play.`
+          );
       } else if (!replay) {
         let message;
         if (
